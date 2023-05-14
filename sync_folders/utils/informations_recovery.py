@@ -34,7 +34,7 @@ class GetInfoForSync:
         get_folder_user_session = os.popen(
             "cat /etc/passwd | grep mike | cut -d : -f6")
 
-        self.user_folder_session = str(f"{get_folder_user_session.read().strip()}/")
+        self.user_folder_session = str(f"{get_folder_user_session.read().strip()}/")[:-1]
 
         return self.user_folder_session
 
@@ -44,6 +44,8 @@ class GetInfoForSync:
         """
 
         actives_partitions = []
+
+        actives_partitions.append(self.get_user_folder())
 
         all_partition = os.popen("lsblk -f | grep sd[bc] | awk '{print $NF}'")
 

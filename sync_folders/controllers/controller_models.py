@@ -11,7 +11,7 @@ class RsyncDryRun:
     """
 
     def __init__(self):
-        self.model_rsync = sync_folders.RsyncFolders()
+        self.model_rsync = sync_folders.RsyncWorkstationToSsd()
         self.view = sync_folders.ViewMenu()
 
     def rsync_dry_run(self):

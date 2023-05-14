@@ -29,7 +29,7 @@ class ViewMenu:
                       "Synchronization of folders",
                       "Quit"]
 
-        self.sub_menu("Menu - SyncFolders")
+        self.sub_menu("Menu - SyncFolders ( For Gnu/Linux )")
 
         for index, type_of_rsync in enumerate(type_rsync):
 
