@@ -5,7 +5,7 @@ Controller models
 import sync_folders
 
 
-class Rsync_dry_run:
+class RsyncDryRun:
     """
     Execute Rsync --dry-run synchronisation
     """

@@ -2,9 +2,8 @@
 Model to retrieve user and system information and generate synchronization
 """
 
-import sync_folders
-
 import os
+import sync_folders
 
 
 class RsyncFolders:
@@ -34,7 +33,8 @@ class RsyncFolders:
         """
 
         for folder in self.folders_sync:
-            os.system(f"rsync -navh {source}/{self.user_session}/{folder}/ {destination}{self.user_folder_session}") # noqa
+            os.system(f"rsync -navh {source}/{self.user_session}/{folder}/\
+                      {destination}{self.user_folder_session}") # noqa
 
     def rsync_folders(self,
                       source: str,
@@ -45,4 +45,5 @@ class RsyncFolders:
         """
 
         for folder in self.folders_sync:
-            os.system(f"rsync -avh {source}/{self.user_session}/{folder}/ {destination}{self.user_folder_session}") # noqa
+            os.system(f"rsync -avh {source}/{self.user_session}/{folder}/\
+                      {destination}{self.user_folder_session}") # noqa

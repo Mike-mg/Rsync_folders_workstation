@@ -20,33 +20,35 @@ class ViewMenu:
 
         print(f"\n\n{'-' * 50}\n{sub_menu}\n{'-' * len(sub_menu)}") # noqa
 
-    def show_menu(self) -> None:
+    def menu_list(self):
         """
-        Show the menu program
-
+        Show menu list
         """
-
-        banner = "Sync backup folders desktop"
-
-        print(f"{'=' * len(banner)}\n{banner}\n{'=' * len(banner)}")
 
         type_rsync = ["Difference between the folders",
-                      "Synchronization of folders"]
+                      "Synchronization of folders",
+                      "Quit"]
 
-        self.sub_menu("Select the type of Rsync")
+        self.sub_menu("Menu - SyncFolders")
 
         for index, type_of_rsync in enumerate(type_rsync):
 
             print(f"{'[ '}{index}{' ]'} {type_of_rsync}")
 
-    def choice_menu(self) -> int:
+    def choice_user_menu(self) -> int:
+        """
+        Choice user menu
+        """
 
-        choice_type_rsync = input("\nChoice type synchronisation : ")
-        choice_type_rsync = int(choice_type_rsync)
+        choice_menu_option = input("\nSelect a menu option : ")
+        choice_menu_option = int(choice_menu_option)
 
-        return choice_type_rsync
+        return choice_menu_option
 
     def show_partitions_active(self) -> None:
+        """
+        show active partitions
+        """
 
         for index, partition in enumerate(
                 self.controller_rsync.all_active_partitions()):

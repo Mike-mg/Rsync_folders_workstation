@@ -7,37 +7,36 @@ import sync_folders
 
 class ControllerMenu:
     """
-    Verify the informations
+    Controls the menu options selected by the user
     """
 
     def __init__(self):
         self.view = sync_folders.ViewMenu()
-        self.controller_model_dry_run = sync_folders.Rsync_dry_run()
+        self.controller_model_dry_run = sync_folders.RsyncDryRun()
 
-    def show_menu_banner(self):
-        """
-        show banner program
-        """
-
-        self.view.show_menu()
-
-    def choice_menu(self):
+    def choice_user_menu(self) -> bool:
         """
         Show select of type of sync
         """
 
-        choice_menu = self.view.choice_menu()
+        while True:
+            # Show the menu while var choice_user_menu is True
+            # If choice_user_menu = 2 then quit the program
 
-        if choice_menu == 0:
-            """
-            Execute Rsync --dry-run
-            """
+            self.view.menu_list()
+            choice_menu = self.view.choice_user_menu()
 
-            self.controller_model_dry_run.rsync_dry_run()
+            if choice_menu == 0:
+                # Execute Rsync --dry-run
 
-        elif choice_menu == 1:
-            """
-            Execute Rsync synchronization folders
-            """
+                self.controller_model_dry_run.rsync_dry_run()
 
-            self.controller_model_dry_run.rsync_synchronization_folders()
+            elif choice_menu == 1:
+                # Execute Rsync synchronization folders
+
+                self.controller_model_dry_run.rsync_synchronization_folders()
+
+            elif choice_menu == 2:
+                # Exit program
+
+                break

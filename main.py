@@ -1,9 +1,22 @@
-import sync_folders
+"""
+Program entry point
+"""
+
 import os
+import sync_folders
 
-os.system("clear")
 
-menu = sync_folders.ControllerMenu()
-menu.show_menu_banner()
-menu.choice_menu()
-menu
+def start_main():
+    """
+    Entry the program
+    """
+
+    choice_menu = sync_folders.ControllerMenu()
+
+    os.system("clear")
+
+    choice_menu.choice_user_menu()
+
+
+if __name__ == "__main__":
+    start_main()
