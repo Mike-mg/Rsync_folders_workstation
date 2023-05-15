@@ -34,7 +34,7 @@ class RsyncFoldersExecuteOption:
 
         for folder in self.folders_sync:
 
-            if source != self.user_folder_session and destination != self.user_folder_session: # noqa
+            if source is self.user_folder_session and destination is self.user_folder_session: # noqa
                 os.system(f"rsync -rtlongvh {source}/{self.user_session}/{folder}/ {destination}/{self.user_session}/{folder}/") # noqa
 
             elif source == self.user_folder_session:
@@ -53,7 +53,7 @@ class RsyncFoldersExecuteOption:
 
         for folder in self.folders_sync:
 
-            if source != self.user_folder_session and destination != self.user_folder_session: # noqa
+            if source is self.user_folder_session and destination is self.user_folder_session: # noqa
                 os.system(f"rsync -avh {source}/{self.user_session}/{folder}/ {destination}/{self.user_session}/{folder}/") # noqa
 
             elif source == self.user_folder_session:
