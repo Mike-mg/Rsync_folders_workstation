@@ -5,13 +5,13 @@ Controller models
 import sync_folders
 
 
-class RsyncDryRun:
+class RsyncOption:
     """
     Execute Rsync --dry-run synchronisation
     """
 
     def __init__(self):
-        self.model_rsync = sync_folders.RsyncWorkstationToSsd()
+        self.model_rsync = sync_folders.RsyncFoldersExecuteOption()
         self.view = sync_folders.ViewMenu()
 
     def rsync_dry_run(self):

@@ -12,7 +12,7 @@ class ControllerMenu:
 
     def __init__(self):
         self.view = sync_folders.ViewMenu()
-        self.controller_model_dry_run = sync_folders.RsyncDryRun()
+        self.controller_rsync_option = sync_folders.RsyncOption()
 
     def choice_user_menu(self) -> bool:
         """
@@ -29,12 +29,12 @@ class ControllerMenu:
             if choice_menu == 0:
                 # Execute Rsync --dry-run
 
-                self.controller_model_dry_run.rsync_dry_run()
+                self.controller_rsync_option.rsync_dry_run()
 
             elif choice_menu == 1:
                 # Execute Rsync synchronization folders
 
-                self.controller_model_dry_run.rsync_synchronization_folders()
+                self.controller_rsync_option.rsync_synchronization_folders()
 
             elif choice_menu == 2:
                 # Exit program
