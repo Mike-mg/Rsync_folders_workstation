@@ -34,13 +34,13 @@ class RsyncFoldersExecuteOption:
 
         for folder in self.folders_sync:
 
-            if source is self.user_folder_session and destination is self.user_folder_session: # noqa
+            if source not in self.user_folder_session and destination not in self.user_folder_session: # noqa
                 os.system(f"rsync -rtlongvh {source}/{self.user_session}/{folder}/ {destination}/{self.user_session}/{folder}/") # noqa
 
-            elif source == self.user_folder_session:
+            elif source in self.user_folder_session:
                 os.system(f"rsync -rtlongvh {source}/{folder}/ {destination}/{self.user_session}/{folder}/") # noqa
 
-            elif destination == self.user_folder_session:
+            elif destination in self.user_folder_session:
                 os.system(f"rsync -rtlongvh {source}/{self.user_session}/{folder}/ {destination}/{folder}/") # noqa
 
     def rsync_folders(self,
@@ -53,11 +53,11 @@ class RsyncFoldersExecuteOption:
 
         for folder in self.folders_sync:
 
-            if source is self.user_folder_session and destination is self.user_folder_session: # noqa
-                os.system(f"rsync -avh {source}/{self.user_session}/{folder}/ {destination}/{self.user_session}/{folder}/") # noqa
+            if source not in self.user_folder_session and destination not in self.user_folder_session: # noqa
+                os.system(f"rsync -rtlogvh {source}/{self.user_session}/{folder}/ {destination}/{self.user_session}/{folder}/") # noqa
 
-            elif source == self.user_folder_session:
-                os.system(f"rsync -avh {source}/{folder}/ {destination}/{self.user_session}/{folder}/") # noqa
+            elif source in self.user_folder_session:
+                os.system(f"rsync -rtlogvh {source}/{folder}/ {destination}/{self.user_session}/{folder}/") # noqa
 
-            elif destination == self.user_folder_session:
-                os.system(f"rsync -avh {source}/{self.user_session}/{folder}/ {destination}/{folder}/") # noqa
+            elif destination in self.user_folder_session:
+                os.system(f"rsync -rtlogvh {source}/{self.user_session}/{folder}/ {destination}/{folder}/") # noqa
