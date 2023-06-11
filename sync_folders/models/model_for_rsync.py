@@ -37,13 +37,6 @@ class RsyncFoldersExecuteOption:
             if source != self.user_folder_session and destination != self.user_folder_session: # noqa
                 os.system(f"rsync -rtlongvh {source}/{self.user_session}/{folder}/ {destination}/{self.user_session}/{folder}/") # noqa
 
-                # if os.path.exists(f"{destination}/{self.user_session}/{folder}"): # noqa
-                #     os.system(f"rsync -rtlongvh {source}/{self.user_session}/{folder}/ {destination}/{self.user_session}/{folder}/") # noqa
-
-                # else:
-                #     os.makedirs(f"{destination}/{self.user_session}/{folder}", exist_ok=False) # noqa
-                #     self.rsync_dry_run(source, destination)
-
             elif source == self.user_folder_session:
                 os.system(f"rsync -rtlongvh {source}/{folder}/ {destination}/{self.user_session}/{folder}/") # noqa
 
@@ -60,11 +53,14 @@ class RsyncFoldersExecuteOption:
 
         for folder in self.folders_sync:
 
+            if not os.path.exists(f"{destination}/{self.user_session}/{folder}"): # noqa
+                os.makedirs(f"{destination}/{self.user_session}/{folder}", exist_ok=False) # noqa
+
             if source != self.user_folder_session and destination != self.user_folder_session: # noqa
-                os.system(f"rsync -rtlogvh {source}/{self.user_session}/{folder}/ {destination}/{self.user_session}/{folder}/") # noqa
+                os.system(f"rsync -rtlogvh --progress {source}/{self.user_session}/{folder}/ {destination}/{self.user_session}/{folder}/") # noqa
 
             elif source == self.user_folder_session:
-                os.system(f"rsync -rtlogvh {source}/{folder}/ {destination}/{self.user_session}/{folder}/") # noqa
+                os.system(f"rsync -rtlogvh --progress {source}/{folder}/ {destination}/{self.user_session}/{folder}/") # noqa
 
             elif destination == self.user_folder_session:
-                os.system(f"rsync -rtlogvh {source}/{self.user_session}/{folder}/ {destination}/{folder}/") # noqa
+                os.system(f"rsync -rtlogvh --progress {source}/{self.user_session}/{folder}/ {destination}/{folder}/") # noqa
