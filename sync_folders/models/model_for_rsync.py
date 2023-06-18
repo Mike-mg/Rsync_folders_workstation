@@ -10,13 +10,16 @@ class ModelRsync():
     Class for the sync folders
     """
 
-    def __init__(self, source, destination, list_folders_selected):
+    def __init__(self, source: str,
+                 destination: str,
+                 list_folders_selected: list):
+
         self.source = source
         self.destination = destination
         self.list_folders_selected = list_folders_selected
-        self.recovery_data = ModelRecoveryData()
-        self.user_session = self.recovery_data.get_user_session()
-        self.user_folder_session = self.recovery_data.get_user_folder()
+        self.model_recovery_data = ModelRecoveryData()
+        self.user_session = self.model_recovery_data.get_user_session()
+        self.user_folder_session = self.model_recovery_data.get_user_folder()
 
     def rsync_dry_run(self) -> None:
         """
@@ -26,14 +29,13 @@ class ModelRsync():
         for folder in self.list_folders_selected:
 
             if self.source != self.user_folder_session and self.destination != self.user_folder_session: # noqa
-                # os.system(f"rsync -rtlongvh {self.source}/{self.user_session}/{folder}/ {self.destination}/{self.user_session}/{folder}/") # noqa
-                print(f"rsync -rtlongvh {self.source}/{self.user_session}/{folder}/ {self.destination}/{self.user_session}/{folder}/") # noqa
+                os.system(f"rsync -rtlongvh {self.source}/{folder}/ {self.destination}/{folder}/") # noqa
 
             elif self.source == self.user_folder_session:
                 os.system(f"rsync -rtlongvh {self.source}/{folder}/ {self.destination}/{self.user_session}/{folder}/") # noqa
 
             elif self.destination == self.user_folder_session:
-                os.system(f"rsync -rtlongvh {self.source}/{self.user_session}/{folder}/ {self.destination}/{folder}/") # noqa
+                os.system(f"rsync -rtlongvh {self.source}/{folder}/ {self.destination[:5]}/{folder}/") # noqa
 
     def rsync_folders(self):
         """
@@ -42,17 +44,17 @@ class ModelRsync():
 
         for folder in self.list_folders_selected:
 
-            if not os.path.exists(f"{self.destination}/{self.user_session}/{folder}"): # noqa
-                os.makedirs(f"{self.destination}/{self.user_session}/{folder}", exist_ok=False) # noqa
+            if not os.path.exists(f"{self.destination}/{folder}"): # noqa
+                os.makedirs(f"{self.destination}/{folder}", exist_ok=False)
 
             if self.source != self.user_folder_session and self.destination != self.user_folder_session: # noqa
-                os.system(f"rsync -rtlogvh --progress {self.source}/{self.user_session}/{folder}/ {self.destination}/{self.user_session}/{folder}/") # noqa
+                os.system(f"rsync -rtlogvh {self.source}/{folder}/ {self.destination}/{folder}/") # noqa
 
             elif self.source == self.user_folder_session:
-                os.system(f"rsync -rtlogvh --progress {self.source}/{folder}/ {self.destination}/{self.user_session}/{folder}/") # noqa
+                os.system(f"rsync -rtlogvh {self.source}/{folder}/ {self.destination}/{self.user_session}/{folder}/") # noqa
 
             elif self.destination == self.user_folder_session:
-                os.system(f"rsync -rtlogvh --progress {self.source}/{self.user_session}/{folder}/ {self.destination}/{folder}/") # noqa
+                os.system(f"rsync -rtlogvh {self.source}/{folder}/ {self.destination[:5]}/{folder}/") # noqa
 
 
 class ModelRecoveryData():
@@ -64,6 +66,7 @@ class ModelRecoveryData():
         self.user_session = self.get_user_session()
         self.user_folder = self.get_user_folder()
         self.active_partitions = self.get_all_active_partitions()
+        self.folders_source_selected = []
 
     def get_user_session(self) -> str:
         """
@@ -88,8 +91,9 @@ class ModelRecoveryData():
         return a list of active partition
         """
 
-        self.active_partitions = [partition.strip() for partition in os.popen(
-            "lsblk -f | grep sd[b-z] | awk '{print $NF}'") if partition.startswith("/")] # noqa
+        self.active_partitions = [
+            partition.strip() for partition in os.popen(
+                "lsblk -f | grep sd[b-z] | awk '{print $NF}'") if partition.startswith("/")] # noqa
 
         self.active_partitions.append(self.get_user_folder())
 
@@ -100,16 +104,22 @@ class ModelRecoveryData():
         return a list of folder partition self.source
         """
 
-        folders_partition_source = [folders for folders in os.listdir(
-            partition) if not folders.startswith(".")]
+        for folder in os.listdir(partition):
+            if not folder.startswith("."):
+                if " " in folder:
+                    name_folder_modified = folder.replace(' ', '_')
+                    name_actual = f"{partition}/{folder}"
+                    new_name = f"{partition}/{name_folder_modified}"
+                    os.rename(name_actual, new_name)
 
-        return folders_partition_source
+        self.folders_source_selected = [
+            folder for folder in os.listdir(
+                partition) if not folder.startswith(".")]
+
+        return self.folders_source_selected
 
 
 if __name__ == "__main__":
     pass
-    # model = ModelRsync()
-    # print(model.get_user_session())
-    # print(model.get_user_folder())
-    # print(model.get_all_active_partitions())
-    # print(model.get_folders_partition_selected())
+    model = ModelRecoveryData()
+    model.get_folders_partition_source("/run/media/mike/wd_m.2_256Go")

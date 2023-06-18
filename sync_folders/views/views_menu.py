@@ -16,7 +16,7 @@ class ViewMenu:
         Format sub menu
         """
 
-        print(f"\n\n{'=' * 50}\n{sub_menu}\n{'=' * len(sub_menu)}\n") # noqa
+        print(f"\n\n{'=' * 50}\n{sub_menu}\n{'=' * len(sub_menu)}\n")
 
     def menu_list(self):
         """
@@ -75,7 +75,8 @@ class ViewMenu:
 
         return index_partition_source
 
-    def get_index_folders_partition_source(self, folers_partitions_source) -> list:
+    def get_index_folders_partition_source(
+            self, folers_partitions_source) -> list:
         """
         show active partitions
         """
@@ -86,7 +87,7 @@ class ViewMenu:
 
             print(f"{'[ '}{index}{' ]'} {partition}")
 
-        choice_partition_source = input("\nSelect folders ( separate folder by ',') : ") # noqa
-        choice_partition_source = [int(folder) for folder in choice_partition_source if folder != ","] # noqa
+        list_index_folders_partition_source = input("\nSelect folders ( separate folder by ',') : ") # noqa
+        list_index_folders_partition_source = [int(folder) for folder in list_index_folders_partition_source.split(",") if folder != ","] # noqa
 
-        return choice_partition_source
+        return list_index_folders_partition_source

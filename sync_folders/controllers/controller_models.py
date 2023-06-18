@@ -7,7 +7,7 @@ import sync_folders
 
 class controllerRsync:
     """
-    Execute Rsync --dry-run synchronisation
+    Controller Model Rsync
     """
 
     def __init__(self):
@@ -19,37 +19,37 @@ class controllerRsync:
 
     def rsync_dry_run(self):
         """
-        Execute Rsync --dry-run between different folders
+        Execute Rsync --dry-run
         """
 
         self.recovery_data_for_source()
 
         model = sync_folders.ModelRsync(
             self.partition_source,
-            "/run/media/mike/wd_m.2_500Go_2",
+            self.partition_destination,
             self.list_folders_source_selected
             )
 
         model.rsync_dry_run()
 
-        # model = self.model_rsync(
-        #     active_partitions[index_partition_source],
-        #     "/run/media/mike/wd_m.2_500Go_2",
-        #     self.folders_source_selected)
+        self.list_folders_source_selected.clear()
 
-    # def rsync_synchronization_folders(self):
-    #     """
-    #     Execute Rsync synchronization folders
-    #     """
+    def rsync_synchronization_folders(self):
+        """
+        Execute Rsync synchronization folders
+        """
 
-    #     partition_source = self.view.select_partition_source()
-    #     partition_destination = self.view.select_partition_destination()
+        self.recovery_data_for_source()
 
-    #     model = sync_folders.ModelRsync(
-    #         self.partition_source,
-    #         "/run/media/mike/wd_m.2_500Go_2",
-    #         self.list_folders_source_selected
-    #         )
+        model = sync_folders.ModelRsync(
+            self.partition_source,
+            self.partition_destination,
+            self.list_folders_source_selected
+            )
+
+        model.rsync_folders()
+
+        self.list_folders_source_selected.clear()
 
     def recovery_data_for_source(self):
         """
@@ -73,5 +73,8 @@ class controllerRsync:
             self.list_folders_source_selected.append(
                 list_folders_partition_source[folder])
 
-        self.partition_destination = self.view.select_partition_destination(
+        index_partition_destination = self.view.select_partition_destination(
             self.model_recovery_data.get_all_active_partitions())
+
+        self.partition_destination = self.model_recovery_data.\
+            get_all_active_partitions()[index_partition_destination]
