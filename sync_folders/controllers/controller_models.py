@@ -5,7 +5,7 @@ Controller models
 import sync_folders
 
 
-class controllerRsync:
+class ControllerRsync:
     """
     Controller Model Rsync
     """

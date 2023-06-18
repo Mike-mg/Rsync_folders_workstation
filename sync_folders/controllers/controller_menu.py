@@ -12,7 +12,7 @@ class ControllerMenu:
 
     def __init__(self):
         self.view = sync_folders.ViewMenu()
-        self.controller_rsync = sync_folders.controllerRsync()
+        self.controller_rsync = sync_folders.ControllerRsync()
 
     def choice_user_menu(self) -> bool:
         """

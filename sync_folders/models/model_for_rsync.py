@@ -117,9 +117,3 @@ class ModelRecoveryData():
                 partition) if not folder.startswith(".")]
 
         return self.folders_source_selected
-
-
-if __name__ == "__main__":
-    pass
-    model = ModelRecoveryData()
-    model.get_folders_partition_source("/run/media/mike/wd_m.2_256Go")
