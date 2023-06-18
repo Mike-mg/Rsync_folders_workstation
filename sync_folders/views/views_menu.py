@@ -11,14 +11,14 @@ class ViewMenu:
     def __init__(self):
         pass
 
-    def sub_menu(self, sub_menu) -> None:
+    def sub_menu(self, sub_menu: str) -> None:
         """
         Format sub menu
         """
 
         print(f"\n\n{'=' * 50}\n{sub_menu}\n{'=' * len(sub_menu)}\n")
 
-    def menu_list(self):
+    def menu_list(self) -> None:
         """
         Show menu list
         """
@@ -59,7 +59,7 @@ class ViewMenu:
 
         return index_partition
 
-    def get_index_partition_source(self, active_partitions: list) -> str:
+    def get_index_partition_source(self, active_partitions: list) -> int:
         """
         show active partitions
         """
@@ -76,7 +76,7 @@ class ViewMenu:
         return index_partition_source
 
     def get_index_folders_partition_source(
-            self, folers_partitions_source) -> list:
+            self, folers_partitions_source: list) -> list:
         """
         show active partitions
         """

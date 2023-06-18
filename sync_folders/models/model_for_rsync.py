@@ -37,7 +37,7 @@ class ModelRsync():
             elif self.destination == self.user_folder_session:
                 os.system(f"rsync -rtlongvh {self.source}/{folder}/ {self.destination[:5]}/{folder}/") # noqa
 
-    def rsync_folders(self):
+    def rsync_folders(self) -> None:
         """
         Execute Rsync folders option synchronization
         """

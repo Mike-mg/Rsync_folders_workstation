@@ -17,7 +17,7 @@ class ControllerRsync:
         self.partition_source = str
         self.partition_destination = str
 
-    def rsync_dry_run(self):
+    def rsync_dry_run(self) -> None:
         """
         Execute Rsync --dry-run
         """
@@ -34,7 +34,7 @@ class ControllerRsync:
 
         self.list_folders_source_selected.clear()
 
-    def rsync_synchronization_folders(self):
+    def rsync_synchronization_folders(self) -> None:
         """
         Execute Rsync synchronization folders
         """
@@ -51,7 +51,7 @@ class ControllerRsync:
 
         self.list_folders_source_selected.clear()
 
-    def recovery_data_for_source(self):
+    def recovery_data_for_source(self) -> None:
         """
         Controller recovery data
         """
