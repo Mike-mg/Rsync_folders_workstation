@@ -44,14 +44,17 @@ class ModelRsync():
 
         for folder in self.list_folders_selected:
 
-            if not os.path.exists(f"{self.destination}/{folder}"): # noqa
-                os.makedirs(f"{self.destination}/{folder}", exist_ok=False)
-
             if self.source != self.user_folder_session and self.destination != self.user_folder_session: # noqa
-                os.system(f"rsync -rtlogvh {self.source}/{folder}/ {self.destination}/{folder}/") # noqa
+
+                if not os.path.exists(f"{self.destination}/{folder}"): # noqa
+                    os.makedirs(f"{self.destination}/{folder}", exist_ok=True)
+
+                    os.system(f"rsync -rtlogvh {self.source}/{folder}/ {self.destination}/{folder}/") # noqa
 
             elif self.source == self.user_folder_session:
-                os.system(f"rsync -rtlogvh {self.source}/{folder}/ {self.destination}/{self.user_session}/{folder}/") # noqa
+                if not os.path.exists(f"{self.destination}/{folder}"): # noqa
+                    os.makedirs(f"{self.destination}/{self.user_session}/{folder}", exist_ok=True) # noqa
+                    os.system(f"rsync -rtlogvh {self.source}/{folder}/ {self.destination}/{self.user_session}/{folder}/") # noqa
 
             elif self.destination == self.user_folder_session:
                 os.system(f"rsync -rtlogvh {self.source}/{folder}/ {self.destination[:5]}/{folder}/") # noqa
