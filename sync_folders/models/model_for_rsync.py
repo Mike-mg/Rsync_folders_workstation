@@ -48,7 +48,6 @@ class ModelRsync():
 
                 if not os.path.exists(f"{self.destination}/{folder}"): # noqa
                     os.makedirs(f"{self.destination}/{folder}", exist_ok=True)
-
                     os.system(f"rsync -rtlogvh {self.source}/{folder}/ {self.destination}/{folder}/") # noqa
 
             elif self.source == self.user_folder_session:
