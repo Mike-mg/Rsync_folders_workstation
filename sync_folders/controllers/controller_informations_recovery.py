@@ -15,6 +15,7 @@ class ControllerRsync:
         self.user = str
         self.home_user_folder = str
         self.partitions_actives = []
+        self.folders_partition = []
 
     def user_session(self) -> str:
         """
@@ -42,3 +43,12 @@ class ControllerRsync:
         self.partitions_actives = self.controller_utils.get_all_active_partitions() # noqa
 
         return self.partitions_actives
+
+    def get_folders_partion(self, partition) -> list:
+        """
+        get folders partition selected
+        """
+
+        self.folders_partition = self.controller_utils.get_folders_partition_selected(partition)
+
+        return self.folders_partition

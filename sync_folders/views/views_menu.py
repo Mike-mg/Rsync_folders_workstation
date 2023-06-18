@@ -2,8 +2,6 @@
 Views menu program
 """
 
-import sync_folders
-
 
 class ViewMenu:
     """
@@ -11,14 +9,14 @@ class ViewMenu:
     """
 
     def __init__(self):
-        self.controller_rsync = sync_folders.ControllerRsync()
+        pass
 
     def sub_menu(self, sub_menu) -> None:
         """
         Format sub menu
         """
 
-        print(f"\n\n{'-' * 50}\n{sub_menu}\n{'-' * len(sub_menu)}") # noqa
+        print(f"\n\n{'=' * 50}\n{sub_menu}\n{'=' * len(sub_menu)}\n") # noqa
 
     def menu_list(self):
         """
@@ -45,36 +43,50 @@ class ViewMenu:
 
         return choice_menu_option
 
-    def show_partitions_active(self) -> None:
+    def select_partition_destination(self, active_partitions: list) -> None:
         """
         show active partitions
         """
 
-        for index, partition in enumerate(
-                self.controller_rsync.all_active_partitions()):
+        self.sub_menu("Select partition destination")
+
+        for index, partition in enumerate(active_partitions):
 
             print(f"{'[ '}{index}{' ]'} {partition}")
 
-    def select_partition_source(self) -> None:
+        index_partition = input("\nSelect a partition : ")
+        index_partition = int(index_partition)
+
+        return index_partition
+
+    def get_index_partition_source(self, active_partitions: list) -> str:
         """
-        Select partition source
+        show active partitions
         """
 
-        self.sub_menu("Select the partition source")
-        self.show_partitions_active()
-        choice_partition_source = input("\nSelect a partition : ")
-        choice_partition_source = int(choice_partition_source)
+        self.sub_menu("Select partition source")
+
+        for index, partition in enumerate(active_partitions):
+
+            print(f"[ {index} ] {partition}")
+
+        index_partition_source = input("\nSelect a partition : ")
+        index_partition_source = int(index_partition_source)
+
+        return index_partition_source
+
+    def get_index_folders_partition_source(self, folers_partitions_source) -> list:
+        """
+        show active partitions
+        """
+
+        self.sub_menu("Select folders partition source")
+
+        for index, partition in enumerate(folers_partitions_source):
+
+            print(f"{'[ '}{index}{' ]'} {partition}")
+
+        choice_partition_source = input("\nSelect folders ( separate folder by ',') : ") # noqa
+        choice_partition_source = [int(folder) for folder in choice_partition_source if folder != ","] # noqa
 
         return choice_partition_source
-
-    def select_partition_destination(self) -> None:
-        """
-        Select partition destination
-        """
-
-        self.sub_menu("Select the partition destination")
-        self.show_partitions_active()
-        choice_partition_destination = input("\nSelect a partition : ")
-        choice_partition_destination = int(choice_partition_destination)
-
-        return choice_partition_destination
