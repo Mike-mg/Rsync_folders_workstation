@@ -32,7 +32,7 @@ class ModelRsync():
                 os.system(f"rsync -rtlongvh {self.source}/{folder}/ {self.destination}/{folder}/") # noqa
 
             elif self.source == self.user_folder_session:
-                os.system(f"rsync -rtlongvh {self.source}/{folder}/ {self.destination}/{self.user_session}/{folder}/") # noqa
+                os.system(f"rsync -rtlongvh --delete {self.source}/{folder}/ {self.destination}/{self.user_session}/{folder}/") # noqa
 
             elif self.destination == self.user_folder_session:
                 os.system(f"rsync -rtlongvh {self.source}/{folder}/ {self.destination[:5]}/{folder}/") # noqa
